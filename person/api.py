@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from ninja import Router, Schema
 from person.models import Person
+from pydantic import Field
 
 router = Router()
 
@@ -8,17 +9,23 @@ router = Router()
 # Defining Schemas (Models for Django-Ninja)
 class PersonIn(Schema):
     # Schema for post() method
-    f_name: str
-    m_name: str
-    l_name: str
+    f_name: str = Field(..., description="First Name")
+    m_name: str = Field(None, description="Middle Name")
+    l_name: str = Field(..., description="Last Name")
+    is_male: bool = Field(None, description="Is Male")
+    is_female: bool = Field(None, description="Is Female")
+    other: bool = Field(None, description="Prefer not to say")
 
 
 class PersonOut(Schema):
     # Schema for get(), ... methods
     id: int
-    f_name: str
-    m_name: str
-    l_name: str
+    f_name: str = Field(None, description="First Name")
+    m_name: str = Field(None, description="Middle Name")
+    l_name: str = Field(None, description="Last Name")
+    is_male: bool = Field(None, description="Is Male")
+    is_female: bool = Field(None, description="Is Female")
+    other: bool = Field(None, description="Prefer not to say")
 
 # Defining API Endpoints as Route (POST, GET, PUT, PATCH, DELETE)
 
@@ -26,12 +33,9 @@ class PersonOut(Schema):
 # Create an instance of Person
 @router.post("/new")
 def create_person(request, payload: PersonIn):
-    person = Person.objects.create(**payload.dict())
+    person = Person.objects.create(**payload.dict(exclude_none=True))
     return {
-        "id": person.id,
-        "f_name": person.f_name,
-        "m_name": person.m_name,
-        "l_name": person.l_name
+        "message": f'User <{person.f_name} {person.l_name}> has been created.'
         }
 
 
@@ -65,3 +69,16 @@ def delete_person(request, person_id: int):
     person = get_object_or_404(Person, id=person_id)
     person.delete()
     return {"success": True}
+
+
+@router.delete("/delete-all")
+def delete_all(request):
+    if Person.objects.all().exists():
+        Person.objects.all().delete()
+        return {
+            "message": "Deleted all persons in the Database"
+        }
+    else:
+        return {
+            "message": "No persons found in the database"
+        }
