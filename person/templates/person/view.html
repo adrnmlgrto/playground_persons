@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+  List | Person Website
+{% endblock %}
+
+
+{% block content %}
+  {% if persons %}
+    <h1>List of Persons</h1>
+
+    <div class="card-deck">
+      {% for person in persons %}
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ person.f_name }} {{ person.m_name }} {{ person.l_name }}</h5>
+            <p class="card-text">{{ person.sex }}</p>
+          </div>
+          <div class="card-footer">
+            <div style="text-align: center;">
+              <a href="{% url 'update_person' person.id %}" class="btn btn-primary">UPDATE</a>
+              <a href="{% url 'delete_person' person.id %}" class="btn btn-danger">DELETE</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div style="text-align: center;">
+      <p>No persons found in the database. Click the "Create Person" above to get started!</p>
+    </div>
+  {% endif %}
+{% endblock %}

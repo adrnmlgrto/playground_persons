@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Person Website{% endblock %}</title>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Create Person</a></li>
+                <li><a href="#">View Persons</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            
+            {% block content %}
+            {% endblock %}
+                
+        </main>
+    </body>
+</html>

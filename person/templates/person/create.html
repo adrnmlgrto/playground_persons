@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Person | Person Website
+{% endblock %}
+
+
+{% block content %}
+    <form name="create_person", action="{url /new}", method="post">
+        {% csrf_token %}
+        <label for="f_name">First Name:</label>
+        <input type="text" id="f_name" name="f_name" required><br>
+
+        <label for="m_name">Middle Name:</label>
+        <input type="text" id="m_name" name="m_name"><br>
+
+        <label for="l_name">Last Name:</label>
+        <input type="text" id="l_name" name="l_name" required><br>
+
+        <label for="sex">Sex:</label>
+        <input type="radio" id="is_male" name="sex" value="male">
+        <label for="is_male">Male</label>
+        <input type="radio" id="is_female" name="sex" value="female">
+        <label for="is_female">Female</label>
+        <input type="radio" id="other" name="sex" value="other">
+        <label for="other">Prefer Not To Say</label><br>
+
+        <div style="text-align: right;">
+        <input type="submit" value="Create Person">
+        </div>
+    </form>
+{% endblock %}
