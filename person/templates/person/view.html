@@ -11,9 +11,9 @@
     {% with counter=0 %}
     <div class="card-deck m-2 p-1">
       {% for person in persons %}
-        {% if forloop.counter0|divisibleby:"4" %}
+        {% if forloop.counter0|divisibleby:"1" %}
           </div>
-          <div class="card-deck m-2 p-3">
+          <div class="card-deck mx-auto m-2 p-3 w-50">
         {% endif %}
         {% with counter=counter|add:"1" %}
         <div class="card">
@@ -28,7 +28,7 @@
             {% endif %}
           </div>
           <div class="card-footer">
-            <div style="text-align: center;">
+            <div style="text-align: right;">
               <a href="{% url 'person_update' person.id %}" class="btn btn-primary">UPDATE</a>
               <a href="{% url 'person_delete' person.id %}" class="btn btn-danger">DELETE</a>
             </div>

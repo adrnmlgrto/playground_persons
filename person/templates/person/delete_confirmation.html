@@ -13,7 +13,8 @@
             <div class="card-body">
             <h5 class="card-title">Delete All Persons</h5>
             <p class="card-text">Are you sure you want to delete all persons from the database?</p>
-            <a href="{% url 'person_delete_all_confirm' %}" class="btn btn-danger">Yes</a>
+            <a href="{% url 'person_list_view' %}" class="btn btn-outline-secondary">Cancel</a>
+            <a href="{% url 'person_delete_all_confirm' %}" class="btn btn-danger">Delete</a>
             </div>
         </div>
         </div>
