@@ -6,28 +6,40 @@
 
 
 {% block content %}
-    <form name="create_person" action="{% url 'person_create' %}" method="post">
+
+    <form name="create_person" action="{% url 'person_create' %}" method="post" class="bg-light p-4 rounded">
         {% csrf_token %}
+        <div class="form-group">
         <label for="f_name">First Name:</label>
-        <input type="text" id="f_name" name="f_name" required><br>
-    
+        <input type="text" id="f_name" name="f_name" class="form-control" required>
+        </div>
+        <div class="form-group">
         <label for="m_name">Middle Name:</label>
-        <input type="text" id="m_name" name="m_name"><br>
-    
+        <input type="text" id="m_name" name="m_name" class="form-control">
+        </div>
+        <div class="form-group">
         <label for="l_name">Last Name:</label>
-        <input type="text" id="l_name" name="l_name" required><br>
-    
+        <input type="text" id="l_name" name="l_name" class="form-control" required>
+        </div>
+        <div class="form-group">
         <label>Sex:</label>
-        <input type="radio" id="is_male" name="s_input" value="male" required>
-        <label for="is_male">Male</label>
-        <input type="radio" id="is_female" name="s_input" value="female" required>
-        <label for="is_female">Female</label>
-        <input type="radio" id="prefer_not_to_say" name="s_input" value="other" required>
-        <label for="prefer_not_to_say">Prefer Not To Say</label><br>
-    
-        <div style="text-align: right;">
-        <input type="submit" value="Create Person">
+        <div class="form-check">
+            <input type="radio" id="is_male" name="s_input" value="male" class="form-check-input" required>
+            <label for="is_male" class="form-check-label">Male</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="is_female" name="s_input" value="female" class="form-check-input" required>
+            <label for="is_female" class="form-check-label">Female</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" id="prefer_not_to_say" name="s_input" value="other" class="form-check-input" required>
+            <label for="prefer_not_to_say" class="form-check-label">Prefer Not To Say</label>
+        </div>
+        </div>
+        <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary">Create Person</button>
         </div>
     </form>
+  
   
 {% endblock %}

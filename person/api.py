@@ -33,7 +33,8 @@ class PersonOut(Schema):
 # Create an instance of Person
 @router.post("/new")
 def create_person(request, payload: PersonIn):
-    person = Person.objects.create(**payload.dict(exclude_none=True))
+    converted_payload = payload.dict(exclude_none=True)
+    person = Person.objects.create(**converted_payload)
     return {
         "message": f'User <{person.f_name} {person.l_name}> has been created.'
         }

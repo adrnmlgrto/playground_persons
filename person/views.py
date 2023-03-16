@@ -7,7 +7,8 @@ from .api import (
     get_person,
     get_all_person,
     update_person,
-    delete_person)
+    delete_person,
+    delete_all)
 
 
 def homepage(request):
@@ -60,4 +61,12 @@ def person_update(request, person_id):
 def person_delete(request, pk: int):
     delete_person(request, pk)
     return render(request, 'person/delete_success.html')
-    # return redirect('person_list_view')
+
+
+def person_delete_all(request):
+    return render(request, 'person/delete_confirmation.html')
+
+
+def person_delete_all_confirm(request):
+    delete_all(request)
+    return redirect('person_list_view')

@@ -35,13 +35,22 @@
           </div>
         </div>
         {% endwith %}
-      {% endfor %}
+      {% endfor %}      
     </div>
     {% endwith %}
 
   {% else %}
-    <div style="text-align: center;">
-      <p>No persons found in the database. Click the "Create Person" above to get started!</p>
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 250px;">
+    <div class="text-center">
+      <div class="card-deck m-2 p-1">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">No Records Found</h5>
+            <p class="card-text">Click the "Create" button above to get started.</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
   {% endif %}
 {% endblock %}
