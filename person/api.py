@@ -46,6 +46,12 @@ def get_person(request, person_id: int):
     return person
 
 
+# @router.get("/filter", response=list[PersonOut])
+# def get_persons(request, **kwargs):
+#     person_list = Person.objects.filter(**kwargs)
+#     return person_list
+
+
 # Get all Person Objects as List
 @router.get("/all", response=list[PersonOut])
 def get_all_person(request):

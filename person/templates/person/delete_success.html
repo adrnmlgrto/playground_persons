@@ -1,0 +1,20 @@
+{% extends "person/base.html" %}
+
+{% block title %}
+    Delete Success
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="alert alert-success text-center" role="alert">
+                Person has been deleted successfully!
+            <br><a href="{% url 'person_list_view' %}" class="btn btn-success mt-3">OK</a>
+            </div>
+        </div>
+        </div>
+    </div>
+  
+{% endblock %}

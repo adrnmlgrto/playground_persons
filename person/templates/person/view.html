@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "person/base.html" %}
 
 {% block title %}
   List | Person Website
@@ -7,24 +7,38 @@
 
 {% block content %}
   {% if persons %}
-    <h1>List of Persons</h1>
 
-    <div class="card-deck">
+    {% with counter=0 %}
+    <div class="card-deck m-2 p-1">
       {% for person in persons %}
+        {% if forloop.counter0|divisibleby:"4" %}
+          </div>
+          <div class="card-deck m-2 p-3">
+        {% endif %}
+        {% with counter=counter|add:"1" %}
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ person.f_name }} {{ person.m_name }} {{ person.l_name }}</h5>
-            <p class="card-text">{{ person.sex }}</p>
+            {% if not person.is_female and not person.other %}
+            <p class="card-text">Sex: MALE</p>
+            {% elif not person.is_male and not person.other %}
+            <p class="card-text">Sex: FEMALE</p>
+            {% else %}
+            <p class="card-text">Sex: PREFER NOT TO SAY</p>
+            {% endif %}
           </div>
           <div class="card-footer">
             <div style="text-align: center;">
-              <a href="{% url 'update_person' person.id %}" class="btn btn-primary">UPDATE</a>
-              <a href="{% url 'delete_person' person.id %}" class="btn btn-danger">DELETE</a>
+              <a href="{% url 'person_update' person.id %}" class="btn btn-primary">UPDATE</a>
+              <a href="{% url 'person_delete' person.id %}" class="btn btn-danger">DELETE</a>
             </div>
           </div>
         </div>
+        {% endwith %}
       {% endfor %}
     </div>
+    {% endwith %}
+
   {% else %}
     <div style="text-align: center;">
       <p>No persons found in the database. Click the "Create Person" above to get started!</p>
