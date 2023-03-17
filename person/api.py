@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from ninja import Router, Schema
 from person.models import Person
-from pydantic import Field
+from pydantic import Field, validator
 
 router = Router()
 
@@ -16,6 +16,30 @@ class PersonIn(Schema):
     is_male: bool = Field(None, description="Is Male")
     is_female: bool = Field(None, description="Is Female")
     other: bool = Field(None, description="Prefer not to say")
+
+    @validator('f_name')
+    def validate_fname(cls, value):
+        # Check if the first name field contains any digits.
+        # Automatically handle to remove digit in the first name.
+        if any(char.isdigit() for char in value):
+            value = ''.join(char for char in value if not char.isdigit())
+        return value
+
+    @validator('m_name')
+    def validate_mname(cls, value):
+        # Check if the middle name field contains any digits.
+        # Automatically handle to remove digit in the middle name.
+        if any(char.isdigit() for char in value):
+            value = ''.join(char for char in value if not char.isdigit())
+        return value
+
+    @validator('l_name')
+    def validate_lname(cls, value):
+        # Check if the last name field contains any digits.
+        # Automatically handle to remove digit in the last name.
+        if any(char.isdigit() for char in value):
+            value = ''.join(char for char in value if not char.isdigit())
+        return value
 
 
 class PersonOut(Schema):

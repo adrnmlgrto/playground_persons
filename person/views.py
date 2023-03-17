@@ -13,11 +13,14 @@ def homepage(request):
 
 
 def search_results(request):
-    persons_found = get_persons(request, request.GET.get('search_field'))
-    print(persons_found)
-    return render(request,
-                  'person/filtered_list.html',
-                  {'persons': persons_found})
+    if request.GET.get('search_field'):
+        persons_found = get_persons(request, request.GET.get('search_field'))
+        print(persons_found)
+        return render(request,
+                      'person/filtered_list.html',
+                      {'persons': persons_found})
+    else:
+        return redirect('person_list_view')
 
 
 def new_person(request):
