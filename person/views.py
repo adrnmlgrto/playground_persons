@@ -1,14 +1,12 @@
 import json
+
 from django.http import JsonResponse
-from .api import PersonIn
-from django.shortcuts import render, redirect
-from .api import (
-    create_person,
-    get_person,
-    get_all_person,
-    update_person,
-    delete_person,
-    delete_all)
+from django.shortcuts import get_object_or_404, redirect, render
+
+from person.models import Person
+
+from .api import (PersonIn, create_person, delete_all, delete_person,
+                  get_all_person, get_person, update_person)
 
 
 def homepage(request):
@@ -52,10 +50,46 @@ def new_person(request):
         return render(request, 'person/create.html')
 
 
-def person_update(request, person_id):
-    # Use API that creates a person in the DB using endpoint "/api/persons/update"
-    update_person(request, person_id)
-    pass
+def person_update(request, pk: int):
+    # Use API that creates a person in the
+    # DB using endpoint "/api/persons/update"
+
+    if request.method == 'POST':
+
+        if request.POST['s_input'] == 'male':
+            data = {
+                "f_name": request.POST['f_name'],
+                "m_name": request.POST['m_name'],
+                "l_name": request.POST['l_name'],
+                "is_male": "true",
+                "is_female": "false",
+                "other": "false"
+            }
+        elif request.POST['s_input'] == 'female':
+            data = {
+                "f_name": request.POST['f_name'],
+                "m_name": request.POST['m_name'],
+                "l_name": request.POST['l_name'],
+                "is_female": "true",
+                "is_male": "false",
+                "other": "false"
+            }
+        elif request.POST['s_input'] == 'other':
+            data = {
+                "f_name": request.POST['f_name'],
+                "m_name": request.POST['m_name'],
+                "l_name": request.POST['l_name'],
+                "other": "true",
+                "is_male": "false",
+                "is_female": "false"
+            }
+
+        update_person(request, pk, PersonIn(**data))
+        return redirect('person_list_view')
+
+    else:
+        person = get_person(request, pk)
+        return render(request, 'person/update.html', {'person': person})
 
 
 def person_delete(request, pk: int):

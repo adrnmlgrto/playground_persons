@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from ninja import Router, Schema
 from person.models import Person
@@ -27,17 +29,23 @@ class PersonOut(Schema):
     is_female: bool = Field(None, description="Is Female")
     other: bool = Field(None, description="Prefer not to say")
 
+
+class Message(Schema):
+    message: str
+
+
 # Defining API Endpoints as Route (POST, GET, PUT, PATCH, DELETE)
 
 
 # Create an instance of Person
-@router.post("/new")
+@router.post("/new", response={200: PersonOut, 400: Message})
 def create_person(request, payload: PersonIn):
     converted_payload = payload.dict(exclude_none=True)
-    person = Person.objects.create(**converted_payload)
-    return {
-        "message": f'User <{person.f_name} {person.l_name}> has been created.'
-        }
+    response = Person.objects.create(**converted_payload)
+
+    person = response
+
+    return person
 
 
 # Get single instance of Person
