@@ -12,4 +12,5 @@ urlpatterns = [
       'delete-all/confirm/',
       views.person_delete_all_confirm,
       name='person_delete_all_confirm'),
+    path('filter/', views.search_results, name='person_filter')
 ]

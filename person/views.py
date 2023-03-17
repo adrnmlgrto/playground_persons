@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from person.models import Person
 
 from .api import (PersonIn, create_person, delete_all, delete_person,
-                  get_all_person, get_person, update_person)
+                  get_all_person, get_person, get_persons, update_person)
 
 
 def homepage(request):
@@ -15,6 +15,11 @@ def homepage(request):
 
     # Render the "view" template with the persons variable
     return render(request, 'person/view.html', {'persons': persons})
+
+def search_results(request):
+    persons_found = get_persons(request, request.GET.get('search_field'))
+    print(persons_found)
+    return render(request, 'person/filtered_list.html', {'persons': persons_found})
 
 
 def new_person(request):

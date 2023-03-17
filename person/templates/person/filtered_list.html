@@ -1,0 +1,55 @@
+{% extends "person/base.html" %}
+
+{% block title %}
+  Filtered List | Person Website
+{% endblock %}
+
+{% block content %}
+  {% if persons %}
+
+    {% with counter=0 %}
+    <div class="card-deck m-2 p-1">
+      {% for person in persons %}
+        {% if forloop.counter0|divisibleby:"1" %}
+          </div>
+          <div class="card-deck mx-auto m-2 p-3 w-50">
+        {% endif %}
+        {% with counter=counter|add:"1" %}
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ person.f_name }} {{ person.m_name }} {{ person.l_name }}</h5>
+            {% if not person.is_female and not person.other %}
+            <p class="card-text">Sex: MALE</p>
+            {% elif not person.is_male and not person.other %}
+            <p class="card-text">Sex: FEMALE</p>
+            {% else %}
+            <p class="card-text">Sex: PREFER NOT TO SAY</p>
+            {% endif %}
+          </div>
+          <div class="card-footer">
+            <div style="text-align: right;">
+              <a href="{% url 'person_update' person.id %}" class="btn btn-primary">UPDATE</a>
+              <a href="{% url 'person_delete' person.id %}" class="btn btn-danger">DELETE</a>
+            </div>
+          </div>
+        </div>
+        {% endwith %}
+      {% endfor %}      
+    </div>
+    {% endwith %}
+
+  {% else %}
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 250px;">
+    <div class="text-center">
+      <div class="card-deck m-2 p-1">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">No Records Found</h5>
+            <p class="card-text">We're sorry, we couldn't find any results matching your search. Please try a different search term or check your spelling. Thank you!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

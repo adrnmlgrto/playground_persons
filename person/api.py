@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from ninja import Router, Schema
@@ -55,10 +56,14 @@ def get_person(request, person_id: int):
     return person
 
 
-# @router.get("/filter", response=list[PersonOut])
-# def get_persons(request, **kwargs):
-#     person_list = Person.objects.filter(**kwargs)
-#     return person_list
+@router.get("/filter/{search_field}", response=list[PersonOut])
+def get_persons(request, search_field: str):
+    person_list = Person.objects.filter(
+                Q(f_name__icontains=search_field) |
+                Q(m_name__icontains=search_field) |
+                Q(l_name__icontains=search_field)
+            )
+    return person_list
 
 
 # Get all Person Objects as List
