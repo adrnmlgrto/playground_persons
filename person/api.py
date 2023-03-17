@@ -1,6 +1,4 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django.http import Http404
 from django.shortcuts import get_object_or_404
 from ninja import Router, Schema
 from person.models import Person
