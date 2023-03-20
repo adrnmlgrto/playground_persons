@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from ninja import Router, Schema
@@ -61,14 +62,25 @@ class Message(Schema):
 
 
 # Create an instance of Person
-@router.post("/new", response={200: PersonOut, 400: Message})
+@router.post("/new", response={200: PersonOut, 422: Message})
 def create_person(request, payload: PersonIn):
-    converted_payload = payload.dict(exclude_none=True)
-    response = Person.objects.create(**converted_payload)
 
-    person = response
+    try:
+        converted_payload = payload.dict(exclude_none=True)
+        response = Person.objects.create(**converted_payload)
+        person = response
+    except ValidationError:
+        return 422, {'message': 'Missing one or two fields. Please try again.'}
 
-    return person
+    return 200, PersonOut(
+        id=person.id,
+        f_name=person.f_name,
+        m_name=person.m_name,
+        l_name=person.l_name,
+        is_male=person.is_male,
+        is_female=person.is_female,
+        other=person.other
+    )
 
 
 # Get single instance of Person
