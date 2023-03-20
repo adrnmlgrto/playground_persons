@@ -23,12 +23,12 @@
             {% elif not person.is_male and not person.other %}
             <p class="card-text">Female</p>
             {% else %}
-            <p class="card-text">Prefer not to say</p>
+            <p class="card-text">Prefer Not to Say</p>
             {% endif %}
           </div>
           <div class="card-footer">
             <div style="text-align: right;">
-              <a href="{% url 'person_update' person.id %}" class="btn btn-primary">UPDATE</a>
+              <a href="{% url 'person_update' person.id %}" class="btn btn-info">UPDATE</a>
               <a href="{% url 'person_delete' person.id %}" class="btn btn-danger">DELETE</a>
             </div>
           </div>
