@@ -20,11 +20,11 @@
           <div class="card-body">
             <h5 class="card-title">{{ person.f_name }} {{ person.m_name }} {{ person.l_name }}</h5>
             {% if not person.is_female and not person.other %}
-            <p class="card-text">SEX: Male</p>
+            <p class="card-text">Male</p>
             {% elif not person.is_male and not person.other %}
-            <p class="card-text">SEX: Female</p>
+            <p class="card-text">Female</p>
             {% else %}
-            <p class="card-text">SEX: Prefer not to say</p>
+            <p class="card-text">Prefer not to say</p>
             {% endif %}
           </div>
           <div class="card-footer">

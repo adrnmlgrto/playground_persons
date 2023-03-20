@@ -12,6 +12,11 @@ def homepage(request):
     return render(request, 'person/view.html', {'persons': persons})
 
 
+def redirect_view(request):
+    # Redirect to Homepage if no URL body
+    return redirect('person_list_view')
+
+
 def search_results(request):
     if request.GET.get('search_field'):
         persons_found = get_persons(request, request.GET.get('search_field'))
